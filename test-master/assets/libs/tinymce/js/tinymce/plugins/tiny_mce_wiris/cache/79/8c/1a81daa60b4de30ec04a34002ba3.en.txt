@@ -1,0 +1,1 @@
+{"result":{"text":"g t f r bevelled fraction numerator 4 over denominator 4 r end fraction"},"status":"ok"}

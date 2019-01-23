@@ -1,0 +1,143 @@
+#Created 2-21-2018
+CREATE TABLE password_reset_requests(
+	id integer AUTO_INCREMENT PRIMARY KEY,
+   	user_id	integer NOT NULL,
+    secret_key 	varchar(255) NOT NULL,
+	valid	integer DEFAULT 0,
+    registry datetime DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)
+#Created 2-23-2018
+CREATE TABLE follows(
+    id integer AUTO_INCREMENT  PRiMARY KEY,
+    followed_id	integer NOT NULL,
+    follower_id	integer NOT NULL,
+    registry datetime DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (followed_id) REFERENCES users(id),
+    FOREIGN KEY (follower_id) REFERENCES users(id)
+)
+#Created 3-1-2018
+ALTER TABLE posts ADD target varchar(255) NOT NULL DEFAULT 'class' AFTER id;
+ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_1;
+ALTER TABLE posts CHANGE class_id target_id integer NOT NULL;
+#Created 3-3-2018
+ALTER TABLE users DROP agenda;
+ALTER TABLE users ADD birthdate date DEFAULT NULL AFTER picture;
+ALTER TABLE users ADD bio text DEFAULT NULL AFTER picture;
+ALTER TABLE users ADD school varchar(255) DEFAULT NULL AFTER picture;
+ALTER TABLE users ADD genre int DEFAULT NULL AFTER picture;
+#Create 8-3-2018
+ALTER TABLE users ADD agenda text AFTER genre;
+UPDATE users SET agenda = "This is your agenda. It automatically saves itself!";
+#Create 9-3-2018
+ALTER TABLE classes ADD privacy integer DEFAULT 1 AFTER agenda;
+#Create 13-3-2018
+ALTER TABLE users ADD cover_picture varchar(255) DEFAULT NULL AFTER picture
+#Create 15-3-2018
+CREATE TABLE badges( 
+	id integer AUTO_INCREMENT PRIMARY KEY, 
+	name varchar(255) NOT NULL, 
+	icon varchar(255) NOT NULL 
+);
+CREATE TABLE users_badges(
+    id		integer AUTO_INCREMENT PRIMARY KEY,
+    badge_id	integer NOT NULL,
+    user_id	integer NOT NULL,
+    giver_id	integer	NOT NULL,
+    enrollment_id	integer NOT NULL,
+    registry datetime DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (badge_id) REFERENCES badges(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (giver_id) REFERENCES users(id),
+    FOREIGN KEY (enrollment_id) REFERENCES class_members(enrollment_id)
+);
+INSERT INTO badges (name, icon) VALUES ("Beginner", "/images/beginner.png");
+INSERT INTO badges (name, icon) VALUES ("Amateur", "/images/amateur.png");
+INSERT INTO badges (name, icon) VALUES ("Advanced", "/images/advanced.png");
+INSERT INTO badges (name, icon) VALUES ("Master", "/images/Master.png");
+INSERT INTO badges (name, icon) VALUES ("Legend", "/images/Legend.png");
+#Create 16-3-2018
+ALTER TABLE chat_messages ADD notified integer DEFAULT 0 AFTER read_flag;
+#Create 20-3-2018
+CREATE TABLE posts_files(
+	id	integer AUTO_INCREMENT PRIMARY KEY,
+    post_id	integer NOT NULL,
+    file_dir	text NOT NULL,
+    file_name	text NOT NULL,
+    file_size	integer,
+    file_extension varchar(255) NOT NULL,
+    registry	datetime DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+);
+#Create 24-3-2018
+CREATE TABLE posts_links( 
+	id integer AUTO_INCREMENT PRIMARY KEY, 
+	post_id integer NOT NULL, 
+	type varchar(255) NOT NULL, 
+	link text NOT NULL, 
+	registry datetime DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE posts_reactions(
+	id	integer AUTO_INCREMENT PRIMARY KEY,
+    post_id	integer NOT NULL,
+    user_id	integer NOT NULL,
+    reaction	integer NOT NULL,
+    registry	datetime DEFAULT CURRENT_TIMESTAMP
+);
+#Create 29-3-2018
+CREATE TABLE educoins(
+    id	   integer AUTO_INCREMENT PRIMARY KEY,
+    enrollment_id	integer NOT NULL,
+    class_id	integer NOT NULL,
+    user_id integer NOT NULL,
+    edu_value	integer NOT NULL,
+    registry	datetime DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE class_calendar( 
+	id integer AUTO_INCREMENT PRIMARY KEY, 
+	class_id integer NOT NULL, 
+	author_id integer NOT NULL, 
+	title varchar(255) NOT NULL, 
+	description text DEFAULT NULL, 
+	start_date date, 
+	end_date date, 
+	registry datetime DEFAULT CURRENT_TIMESTAMP 
+);
+#Create 17-4-2018
+CREATE TABLE assignments(
+	id	integer AUTO_INCREMENT PRIMARY KEY,
+    	class_id	integer NOT NULL,
+    	author_id	integer NOT NULL,
+  	title varchar(255) NOT NULL,
+    	description text NOT NULL,
+    	educoin_value float NOT NULL,
+    	deadline	date,
+    	registry	datetime DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE members_final_grades(
+	id	integer AUTO_INCREMENT PRIMARY KEY,
+    	class_id	integer NOT NULL,
+    	user_id	integer NOT NULL,
+	grade varchar(255) NOT NULL,
+    	registry	datetime DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE members_assignments_grades( 
+	id integer AUTO_INCREMENT PRIMARY KEY, 
+	assignment_id integer NOT NULL, 
+	class_id integer NOT NULL, user_id integer NOT NULL, 
+	grade varchar(255) NOT NULL, 	
+	registry datetime DEFAULT CURRENT_TIMESTAMP 
+);
+#Create 4-22-2018
+CREATE TABLE submitted_assignments(
+	id	integer AUTO_INCREMENT PRIMARY KEY,
+    assignment_id	integer NOT NULL,
+    user_id	integer NOT NULL,
+    plain_text	text NOT NULL,
+    registry	datetime DEFAULT CURRENT_TIMESTAMP 
+);
+

@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 14px style square root of g c h t g g end root end style"},"status":"ok"}

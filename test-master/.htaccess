@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	#friendly urls
+	RewriteRule ^home/?$ index.php [NC,L]
+	RewriteRule ^legal/?$ templates/legal.php [NC,L]
+	RewriteRule ^tutorials/?$ templates/tutorials.php [NC,L]
+	RewriteRule ^messages/?$ templates/messages.php [NC,L]
+	RewriteRule ^settings/?$ templates/settings.php [NC,L]
+	RewriteRule ^profile/([0-9]+)-([a-z0-9-]+)/?$ templates/profile.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/?$ templates/class.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/members/?$ templates/class-members.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/requests/?$ templates/user-requests.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/assignments/?$ templates/assignments.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/about/?$ templates/about-class.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^class/([0-9]+)-([a-z0-9-]+)/gradebook/?$ templates/gradebook.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^lesson/([0-9]+)-([a-z0-9-]+)/?$ templates/lesson.php?id=$1&name=$2 [QSA,L]
+	RewriteRule ^post/([0-9]+)/?$ templates/post.php?id=$1 [QSA,L]
+	RewriteRule ^assignment/([0-9]+)/?$ templates/assignment-page.php?id=$1 [QSA,L]
+	RewriteRule yewno/?$ templates/yewno.php [NC,L]
+	#=====Restrições======
+	Options -Indexes
+</IfModule>
